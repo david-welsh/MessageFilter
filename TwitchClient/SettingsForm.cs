@@ -20,6 +20,11 @@ namespace TwitchClient
             _login = login;
         }
 
+        public void ShowError(String errorMessage)
+        {
+            MessageBox.Show(errorMessage);
+        }
+
         private void okButton_Click(object sender, EventArgs e)
         {
             _login.username = usernameTextBox.Text;

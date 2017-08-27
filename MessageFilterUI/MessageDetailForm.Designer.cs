@@ -35,12 +35,14 @@
             // 
             // messageBox
             // 
-            this.messageBox.Enabled = false;
+            this.messageBox.BackColor = System.Drawing.Color.WhiteSmoke;
             this.messageBox.Location = new System.Drawing.Point(12, 65);
             this.messageBox.Multiline = true;
             this.messageBox.Name = "messageBox";
+            this.messageBox.ReadOnly = true;
             this.messageBox.Size = new System.Drawing.Size(410, 334);
             this.messageBox.TabIndex = 0;
+            this.messageBox.TabStop = false;
             // 
             // authorLabel
             // 

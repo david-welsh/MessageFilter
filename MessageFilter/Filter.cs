@@ -78,10 +78,14 @@ namespace MessageFilter
         /// from.
         /// </summary>
         /// <param name="receiver">The receiver to add.</param>
-        public void RegisterReceiver(MessageReceiver receiver)
+        public Boolean RegisterReceiver(MessageReceiver receiver)
         {
-            receiver.Init(_messageQueue);
+            if (!receiver.Init(_messageQueue))
+            {
+                return false;
+            }
             Task.Run((Action) receiver.Run);
+            return true;
         }
 
         /// <summary>

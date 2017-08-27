@@ -14,7 +14,7 @@ namespace MFCommon
         /// </summary>
         /// <param name="messageQueue">The message queue to place new 
         /// messages onto</param>
-        void Init(MessageQueue messageQueue);
+        Boolean Init(MessageQueue messageQueue);
 
         /// <summary>
         /// Main operation of the receiver. This method will be run in a thread

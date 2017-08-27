@@ -2,6 +2,7 @@
 using MFCommon;
 using TwitchLib.Models.Client;
 using TwitchLib.Events.Client;
+using TwitchLib.Exceptions.Client;
 using System.Configuration;
 using System.Diagnostics;
 
@@ -18,23 +19,33 @@ namespace TwitchClient
 
         public TwitchReceiver() { }
 
-        public void Init(MessageQueue messageQueue)
+        public Boolean Init(MessageQueue messageQueue)
         {
             Debug.WriteLine("Initialising Twitch client...");
 
             _messageQueue = messageQueue;
             _login = Login.Default;
 
+            SettingsForm settingsForm = new SettingsForm(_login);
 
             if (!_login.setup)
             {
-                SettingsForm settingsForm = new SettingsForm(_login);
-                settingsForm.ShowDialog();
+                var result = settingsForm.ShowDialog();
+                if (result == System.Windows.Forms.DialogResult.Cancel)
+                {
+                    return false;
+                }
             }
 
-            _credentials = new ConnectionCredentials(_login.username, _login.oauth_code);
-            _client = new TwitchLib.TwitchClient(_credentials, _login.ctm);
-            _client.OnMessageReceived += OnMessageReceived;
+            while (!InitConnection(settingsForm))
+            {
+                var result = settingsForm.ShowDialog();
+                if (result == System.Windows.Forms.DialogResult.Cancel)
+                {
+                    return false;
+                }
+            }
+            return true;
         }
 
         public void Run()
@@ -49,10 +60,10 @@ namespace TwitchClient
             var result = settingsForm.ShowDialog();
             if (result == System.Windows.Forms.DialogResult.OK)
             {
-                _client.Disconnect();
-                _credentials = new ConnectionCredentials(_login.username, _login.oauth_code);
-                _client = new TwitchLib.TwitchClient(_credentials, _login.ctm);
-                _client.OnMessageReceived += OnMessageReceived;
+                while (!InitConnection(settingsForm))
+                {
+                    result = settingsForm.ShowDialog();
+                }
                 _client.Connect();
             }
         }
@@ -60,6 +71,33 @@ namespace TwitchClient
         public String GetName()
         {
             return "Twitch Client";
+        }
+
+        private Boolean InitConnection(SettingsForm settingsForm)
+        {
+            TwitchLib.TwitchClient newClient;
+            ConnectionCredentials newCred;
+
+            try
+            {
+                newCred = new ConnectionCredentials(_login.username, _login.oauth_code);
+                newClient = new TwitchLib.TwitchClient(newCred, _login.ctm);
+                newClient.OnMessageReceived += OnMessageReceived;
+
+                if (_client != null && _client.IsConnected)
+                {
+                    _client.Disconnect();
+                }
+
+                _client = newClient;
+                _credentials = newCred;
+                return true;
+            }
+            catch (Exception e)
+            {
+                settingsForm.ShowError(e.Message);
+                return false;
+            }
         }
 
         private void OnMessageReceived(object sender, OnMessageReceivedArgs e)
@@ -85,8 +123,11 @@ namespace TwitchClient
 
         public void ShutDown()
         {
-            Debug.WriteLine("Disconnecting Twitch client...");
-            _client.Disconnect();
+            if (_client != null && _client.IsConnected)
+            {
+                Debug.WriteLine("Disconnecting Twitch client...");
+                _client.Disconnect();
+            }
         }
     }
 }

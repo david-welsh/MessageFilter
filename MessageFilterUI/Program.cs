@@ -28,7 +28,10 @@ namespace MessageFilterUI
 
             // Create the Twitch chat receiver and register with filter.
             MessageReceiver tc = new TwitchReceiver();
-            _filter.RegisterReceiver(tc);
+            if (!_filter.RegisterReceiver(tc))
+            {
+                MessageBox.Show("Unable to connect to Twitch");
+            }
 
             // Initialise the form and add the settings menu for the receiver.
             _mainForm = new MainForm(_filter);

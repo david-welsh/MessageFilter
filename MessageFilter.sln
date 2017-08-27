@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.26730.10
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TwitchClient", "TwitchClient\TwitchClient.csproj", "{4216C550-3908-4C5A-97B6-1DCD2173CDCD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MFCommon", "MFInterface\MFCommon.csproj", "{D5B58BEC-DB5D-4C98-B461-75A154FF438A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MFCommon", "MFCommon\MFCommon.csproj", "{D5B58BEC-DB5D-4C98-B461-75A154FF438A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessageFilter", "MessageFilter\MessageFilter.csproj", "{B57620AF-0CCB-46FE-8CFF-E2D8E6618ED4}"
 EndProject

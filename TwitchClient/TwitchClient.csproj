@@ -75,7 +75,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MFInterface\MFCommon.csproj">
+    <ProjectReference Include="..\MFCommon\MFCommon.csproj">
       <Project>{d5b58bec-db5d-4c98-b461-75a154ff438a}</Project>
       <Name>MFCommon</Name>
     </ProjectReference>

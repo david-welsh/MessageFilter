@@ -7,8 +7,8 @@
     <ProjectGuid>{B57620AF-0CCB-46FE-8CFF-E2D8E6618ED4}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MessageFiltero</RootNamespace>
-    <AssemblyName>MessageFiltero</AssemblyName>
+    <RootNamespace>MessageFilter</RootNamespace>
+    <AssemblyName>MessageFilter</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -20,6 +20,8 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>
+    </DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -28,6 +30,8 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>
+    </DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -46,7 +50,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MFInterface\MFCommon.csproj">
+    <ProjectReference Include="..\MFCommon\MFCommon.csproj">
       <Project>{d5b58bec-db5d-4c98-b461-75a154ff438a}</Project>
       <Name>MFCommon</Name>
     </ProjectReference>
