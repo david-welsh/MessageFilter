@@ -37,12 +37,17 @@ namespace MessageFilterUI
             String tag = tagTextBox.Text;
             tagTextBox.Clear();
 
+            AddTag(tag);
+        }
+
+        public Boolean AddTag(String tag)
+        {
             if (!tag.StartsWith("#")) tag = "#" + tag;
 
             if (!_filter.AddTag(tag))
             {
                 MessageBox.Show("Cannot add new tag " + tag + "...");
-                return;
+                return false;
             }
 
             TabPage tagTabPage = new TabPage(tag);
@@ -74,6 +79,7 @@ namespace MessageFilterUI
             tagTabPage.Controls.Add(new ListBox());
 
             _tabTags[tag] = tagListBox;
+            return true;
         }
 
         public void AddMessage(String tag, MFCommon.Message message)
@@ -120,5 +126,36 @@ namespace MessageFilterUI
             }
         }
 
+        private void openToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFile = new OpenFileDialog();
+            if (openFile.ShowDialog() == DialogResult.OK)
+            {
+                Debug.WriteLine("Opening file: " + openFile.FileName);
+                System.IO.StreamReader sr = new System.IO.StreamReader(openFile.FileName);
+                if (!FileHandler.Import(sr, this))
+                {
+                    MessageBox.Show("Couldn't import file...");
+                }
+                sr.Close();
+            }
+        }
+
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog saveFile = new SaveFileDialog();
+            if (saveFile.ShowDialog() == DialogResult.OK)
+            {
+                Debug.WriteLine("Saving file: " + saveFile.FileName);
+                System.IO.StreamWriter sw = new System.IO.StreamWriter(saveFile.FileName);
+                FileHandler.Export(sw, _filter);
+                sw.Close();
+            }
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
     }
 }

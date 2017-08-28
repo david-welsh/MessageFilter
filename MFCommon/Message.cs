@@ -10,11 +10,8 @@ namespace MFCommon
         private String _author;
         private String _text;
         private String _date;
-        private Int32 _id;
 
         private String _tag;
-
-        private static Int32 _nextId = 0;
 
         /// <summary>
         /// Constructor for message.
@@ -28,7 +25,6 @@ namespace MFCommon
             _author = author;
             _text = text;
             _date = date;
-            _id = _nextId++;
 
             _tag = tag;
         }

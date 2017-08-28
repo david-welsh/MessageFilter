@@ -14,10 +14,10 @@ namespace MessageFilter
     {
         private readonly object _lockobj = new object();
 
-        private MessageQueueImpl _messageQueue;
+        private MessageQueue _messageQueue;
         private FilterQueueManager _filterQueue;
 
-        private HashSet<String> _tags;
+        private ISet<String> _tags;
 
         /// <summary>
         /// Constructor for Filter.
@@ -99,6 +99,11 @@ namespace MessageFilter
                 Debug.WriteLine("Received message...");
                 FilterMessage(newMessage);
             }
+        }
+
+        public ISet<String> Tags
+        {
+            get { return _tags; }
         }
 
         // Check if a message has a tag we are looking for and add it to the 
