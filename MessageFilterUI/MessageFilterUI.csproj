@@ -7,7 +7,7 @@
     <ProjectGuid>{6B7CEB53-354B-435F-8082-DAB91239001A}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>MessageFilterUI</RootNamespace>
-    <AssemblyName>MessageFilter</AssemblyName>
+    <AssemblyName>MessageFilterUI</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
