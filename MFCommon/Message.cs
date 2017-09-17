@@ -25,7 +25,6 @@ namespace MFCommon
             _author = author;
             _text = text;
             _date = date;
-
             _tag = tag;
         }
 

@@ -1,13 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using MFCommon;
 using MessageFilter;
 using System.Diagnostics;
 
@@ -132,12 +126,11 @@ namespace MessageFilterUI
             if (openFile.ShowDialog() == DialogResult.OK)
             {
                 Debug.WriteLine("Opening file: " + openFile.FileName);
-                System.IO.StreamReader sr = new System.IO.StreamReader(openFile.FileName);
-                if (!FileHandler.Import(sr, this))
+                ISet<String> tags = FileHandler.Import(openFile.FileName);
+                foreach (var tag in tags)
                 {
-                    MessageBox.Show("Couldn't import file...");
+                    AddTag(tag);
                 }
-                sr.Close();
             }
         }
 
@@ -147,9 +140,7 @@ namespace MessageFilterUI
             if (saveFile.ShowDialog() == DialogResult.OK)
             {
                 Debug.WriteLine("Saving file: " + saveFile.FileName);
-                System.IO.StreamWriter sw = new System.IO.StreamWriter(saveFile.FileName);
-                FileHandler.Export(sw, _filter);
-                sw.Close();
+                FileHandler.Export(saveFile.FileName, _filter.Tags);
             }
         }
 

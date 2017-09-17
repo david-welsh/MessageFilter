@@ -2,8 +2,6 @@
 using MFCommon;
 using TwitchLib.Models.Client;
 using TwitchLib.Events.Client;
-using TwitchLib.Exceptions.Client;
-using System.Configuration;
 using System.Diagnostics;
 
 namespace TwitchClient

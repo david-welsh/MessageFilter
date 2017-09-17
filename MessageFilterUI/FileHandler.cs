@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,26 +11,27 @@ namespace MessageFilterUI
 {
     static class FileHandler
     {
-        public static Boolean Import(System.IO.StreamReader streamReader, MainForm form)
+        public static ISet<String> Import(String fileName)
         {
-            String line;
+            ISet<String> tags = new HashSet<String>();
+            StreamReader streamReader = new StreamReader(fileName);
             while (!streamReader.EndOfStream)
             {
-                line = streamReader.ReadLine();
-                Debug.WriteLine(line);
-                if (!form.AddTag(line)) return false;
+                String tag = streamReader.ReadLine();
+                tags.Add(tag);
             }
-            return true;
+            streamReader.Close();
+            return tags;
         }
 
-        public static Boolean Export(System.IO.StreamWriter sw, Filter filter)
+        public static void Export(String fileName, ISet<String> tags)
         {
-            foreach (var tag in filter.Tags)
+            StreamWriter streamWriter = new StreamWriter(fileName);
+            foreach (var tag in tags)
             {
-                Debug.WriteLine(tag);
-                sw.WriteLine(tag);
+                streamWriter.WriteLine(tag);
             }
-            return true;
+            streamWriter.Close();
         }
     }
 }

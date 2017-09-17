@@ -31,22 +31,28 @@ namespace MessageFilter
             _tags = new HashSet<String>();
         }
 
-        /// <summary>
-        /// Add a new tag for the filter to find in messages.
-        /// </summary>
-        /// <param name="tag">The tag to search for.</param>
-        /// <returns>True if tag is valid and not already present, false 
-        /// otherwise.</returns>
-        public bool AddTag(String tag)
+        private Boolean ValidateTags(ISet<String> tags)
         {
-            // Don't accept empty tags or tags with spaces.
-            if (tag.Equals("") 
+            foreach (var tag in tags)
+            {
+                if (!ValidateTag(tag)) return false;
+            }
+            return true;
+        }
+
+        private Boolean ValidateTag(String tag)
+        {
+            if (tag.Equals("")
                 || tag.Equals("#")
                 || tag.Any(Char.IsWhiteSpace))
             {
                 return false;
             }
+            return true;
+        }
 
+        private Boolean InsertTag(String tag)
+        {
             // Add # if not present.
             if (!tag.StartsWith("#")) tag = "#" + tag;
 
@@ -58,7 +64,30 @@ namespace MessageFilter
                 _tags.Add(tag);
             }
             return true;
+        }
 
+        public Boolean AddTags(ISet<String> tags)
+        {
+            if (!ValidateTags(tags)) return false;
+            foreach (var tag in tags)
+            {
+                InsertTag(tag);
+            }
+            return true;
+        }
+
+        /// <summary>
+        /// Add a new tag for the filter to find in messages.
+        /// </summary>
+        /// <param name="tag">The tag to search for.</param>
+        /// <returns>True if tag is valid and not already present, false 
+        /// otherwise.</returns>
+        public Boolean AddTag(String tag)
+        {
+            // Don't accept empty tags or tags with spaces.
+            if (!ValidateTag(tag)) return false;
+
+            return InsertTag(tag);
         }
 
         /// <summary>
